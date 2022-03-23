@@ -1,0 +1,116 @@
+﻿@model IEnumerable<PTHShopping.Models.CtdonHang>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    double sum = 0.0;
+    @foreach (var item in Model)
+    {
+        sum += item.Tong.Value;
+    }
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    .False {
+        background-color: #696969 !important;
+        opacity: 0.8;
+    }
+
+    th {
+        font-weight: bold !important;
+        text-align: center;
+    }
+
+    td {
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
+
+    .img {
+        width: 100px !important;
+        height: 100px !important;
+        border-radius: 0 !important;
+    }
+
+    .scroll {
+        overflow-x: scroll;
+        width: 100%;
+    }
+
+    td {
+        max-width: 200px;
+        overflow-x: hidden;
+    }
+</style>
+<h5 class="text-info">Đơn hàng -  @ViewBag.Id</h5>
+<hr />
+<h6>Khách hàng: &emsp;&emsp; @ViewBag.kh </h6>
+<h6>Địa chỉ: &emsp;&emsp; @ViewBag.dckh </h6>
+<h6>Tổng đơn hàng: &emsp;&emsp; @sum  Vnđ</h6>
+<h6>Chi tiết: </h6>
+<p>
+
+</p>
+<div class="scroll">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Sản phẩm
+                </th>
+                <th>
+                    Đơn giá
+                </th>
+                <th>
+                    Số lượng
+                </th>
+                <th>
+                    Khuyến mãi (%)
+                </th>
+                <th>
+                    Thành tiền
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.IdsanPhamNavigation.Thumb != null && item.IdsanPhamNavigation.Thumb != "")
+                        {
+                            <img class="img" src="/@item.IdsanPhamNavigation.Thumb" />
+                        }
+                        else
+                        {
+                            <img class="img" src="https://via.placeholder.com/100" />
+                        }
+                    </td>
+                    <td>
+                        @item.IdsanPhamNavigation.TenSanPham
+                    </td>
+                    <td>
+                        @item.IdsanPhamNavigation.Gia
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoLuong)
+                    </td>
+                    <td>
+                        @item.IdsanPhamNavigation.KhuyenMai
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tong)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdctdonHang">Thay đổi số lượng</a> |
+                        <a class="text-danger" asp-action="Delete" asp-route-id="@item.IdctdonHang">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

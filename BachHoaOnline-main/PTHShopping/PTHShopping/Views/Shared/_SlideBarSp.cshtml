@@ -1,0 +1,116 @@
+﻿@model PTHShopping.Models.Sanpham_Danhmuc;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+</style>
+<div class="col-lg-3 col-md-5">
+    <div class="sidebar">
+        <div class="sidebar__item">
+            <div class="latest-product__text">
+                <h4>Sản phẩm mới</h4>
+                <div class="latest-product__slider owl-carousel">
+                    <div class="latest-prdouct__slider__item">
+                        @{
+                            var sortls = Model.ListSanpham.OrderByDescending(c => c.NgayTao);
+                        }
+                        @foreach (var item in sortls)
+                        {
+                            int indexRoot = Model.ListSanpham.IndexOf(item);
+                            int index = sortls.ToList().IndexOf(item);
+                            int count = sortls.ToList().Count;
+                            <a href="@Url.Action("Index", "ChiTietSP",new { id = indexRoot})" class="latest-product__item">
+                                <div class="latest-product__item__pic">
+                                    <img style="max-width:100px" src="/@item.Thumb" alt=""> @*thumb*@
+                                </div>
+                                <div class="latest-product__item__text">
+                                    <h6>@item.TenSanPham</h6>
+                                    <span>@item.Gia VND</span>
+                                    <div class="pgiamgia">New</div>
+                                </div>
+                            </a>
+                            if (index % 3 == 2 && index != count - 1)
+                            {
+                            @:</div>
+                            @: <div class="latest-prdouct__slider__item">
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar__item">
+            <form asp-action="Index" asp-controller="MuaSam">
+                <h4>Bộ lọc tìm kiếm</h4>
+                <div style="margin-left:10px; margin-bottom:10px;">
+                    @Html.RadioButton("Locz", "lockm") <span>Khuyến mãi</span><br />
+                    @Html.RadioButton("Locz", "locnew") <span>Mới nhất</span><br />
+                    @Html.RadioButton("Locz", "locslban") <span>Nhiều nhất</span>
+                </div>
+
+                <h5 style="font-weight:bold;">Giá</h5>
+                <center>
+                    <div id="price_slider_value" style="width: 100%"></div>
+                </center>
+                <div class="form-group">
+                    <div id="price_slider" style="margin-top:10px" name="vminmax"></div>
+                    <table style="margin-top:10px;">
+                        <tr>
+                            <td style="width:100px; display:inline-block;">Giá thấp:</td>
+                            <td><input style="border: 1px solid #DCDCDC;" id="vmin" name="vmin" type="number" min="500"></td>
+                        </tr>
+                        <tr>
+                            <td style="width:100px; display:inline-block;">Giá cao:</td>
+                            <td><input style="border: 1px solid #DCDCDC;" id="vmax" name="vmax" type="number" max="1000000"></td>
+                        </tr>
+                    </table>
+                </div>
+                <center>
+                    <button class="site-btn" type="submit" style="width:80%;">LỌC</button>
+                </center>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+<script type="text/javascript">
+    var min = 500;
+    var max = 1000000;
+    function SetSlider() {
+        //Display the minimum and maximum values.
+        //$("#price_slider_value").html(min + "    -    " + max);
+        $('#vmin').val(min);
+        $('#vmax').val(max);
+        //Initialize the slider.
+        $("#price_slider").slider({
+            min: min,
+            max: max,
+            step: 500,
+            values: [min, max],
+            stop: function (event, ui) {
+                var start = parseInt(ui.values[0]);
+                var end = parseInt(ui.values[1]);
+                //$("#price_slider_value").html(start + "    -    " + end);
+                $('#vmin').val(start);
+                $('#vmax').val(end);
+            },
+            slide: function (event, ui) {
+                if ((ui.values[0] + 5) >= ui.values[1]) {
+                    return false;
+                }
+                var start = parseInt(ui.values[0]);
+                var end = parseInt(ui.values[1]);
+                //$("#price_slider_value").html(start + "    -    " + end);
+                $('#vmin').val(start);
+                $('#vmax').val(end);
+            }
+        });
+    }
+    $(function () {
+        SetSlider();
+    });
+</script>

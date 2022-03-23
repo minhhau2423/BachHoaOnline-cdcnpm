@@ -1,0 +1,89 @@
+﻿@using System.Security.Claims;
+@{ 
+    var roles = ((ClaimsIdentity)User.Identity).Claims
+            .Where(c => c.Type == ClaimTypes.Role)
+            .Select(c => c.Value).ToList()[0];
+}
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item nav-profile">
+            <div class="nav-link">
+                <div class="nav-profile-image">
+                    <img src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png" alt="profile">
+                    <span class="login-status online"></span>
+                    <!--change to offline or busy as needed-->
+                </div>
+                <div class="nav-profile-text d-flex flex-column">
+                    <span class="font-weight-bold mb-2">@User.Identity.Name</span>
+                    <span class="text-secondary text-small">@roles</span>
+                </div>
+                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/Admin/Home">
+                <span class="menu-title">Tổng quan</span>
+                <i class="mdi mdi-home menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Admin" asp-controller="AdminDonHangs" asp-action="Index">
+                <span class="menu-title">Quản lý đơn hàng </span>
+                <i class="mdi mdi-book-multiple menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Admin" asp-controller="AdminTinTuc" asp-action="Index">
+                <span class="menu-title">Quản lý tin tức </span>
+                <i class="mdi mdi-newspaper menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#sp" aria-expanded="false" aria-controls="sp">
+                <span class="menu-title">Quản lý sản phẩm</span>
+                <i class="mdi menu-arrow"></i>
+                <i class="mdi mdi-package-variant menu-icon"></i>
+            </a>
+            <div class="collapse" id="sp">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="AdminCategories" asp-action="Index"> Danh mục sản phẩm </a></li>
+                    <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="AdminSanPhams" asp-action="Index"> Danh sách sản phẩm </a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Admin" asp-controller="AdminKhachHangs" asp-action="Index">
+                <span class="menu-title">Quản lý Khách hàng</span>
+                <i class="mdi mdi-human-greeting menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"  asp-area="Admin" asp-controller="Thongke" asp-action="Index">
+                <span class="menu-title">Quản lý thống kê</span>
+                <i class="mdi mdi-chart-bar menu-icon"></i>
+            </a>
+        </li>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (roles == "Admin")
+            {
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
+                        <span class="menu-title">Quản lý hệ thống</span>
+                        <i class="mdi menu-arrow"></i>
+                        <i class="mdi mdi-settings menu-icon"></i>
+                    </a>
+                    <div class="collapse" id="general-pages">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Accounts" asp-action="Index"> Quản lý tài khoản quản trị </a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="AdminRoles" asp-action="Index"> Quản lý quyền truy cập </a></li>
+                        </ul>
+                    </div>
+                </li>
+            }
+
+        }
+
+    </ul>
+</nav>

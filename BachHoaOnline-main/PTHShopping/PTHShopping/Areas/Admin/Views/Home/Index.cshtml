@@ -1,0 +1,270 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    List<MaGiamGium> Mas = ViewBag.magiamgia;
+}
+
+
+
+<div class="row" id="proBanner">
+   @* <div class="col-12">
+        <span class="d-flex align-items-center purchase-popup">
+            <p>Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!</p>
+            <a href="https://www.bootstrapdash.com/product/purple-bootstrap-admin-template?utm_source=organic&utm_medium=banner&utm_campaign=free-preview" target="_blank" class="btn download-button purchase-button ml-auto">Upgrade To Pro</a>
+            <i class="mdi mdi-close" id="bannerClose"></i>
+        </span>
+    </div>*@
+</div>
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-home"></i>
+        </span> Tổng quan
+    </h3>
+    
+</div>
+<div class="row">
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card bg-gradient-danger card-img-holder text-white">
+            <div class="card-body">
+                <img src="~/Adminassets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">
+                    Doanh số trong tháng <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                </h4>
+                <h2 class="mb-5">@ViewBag.danhso VNĐ</h2>
+                <h6 class="card-text">Tính đến @ViewBag.now</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card bg-gradient-info card-img-holder text-white">
+            <div class="card-body">
+                <img src="~/Adminassets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">
+                    Đơn hàng trong tháng <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                </h4>
+                <h2 class="mb-5">@ViewBag.sodh</h2>
+                <h6 class="card-text">Tính đến @ViewBag.now</h6>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card bg-gradient-success card-img-holder text-white">
+            <div class="card-body">
+                <img src="~/Adminassets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                <h4 class="font-weight-normal mb-3">
+                    Số lượng khách hàng <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                </h4>
+                <h2 class="mb-5">@ViewBag.SLKH</h2>
+                <h6 class="card-text">Tính đến @ViewBag.now</h6>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="row">
+    <div class="col-md-7 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="clearfix">
+                    <h4 class="card-title float-left">Visit And Sales Statistics</h4>
+                    <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                </div>
+                <canvas id="visit-sale-chart" class="mt-4"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Traffic Sources</h4>
+                <canvas id="traffic-chart"></canvas>
+                <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
+            </div>
+        </div>
+    </div>
+</div>*@
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">sản phẩm bán chạy</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> Sản phẩm  </th>
+                                <th> Loại </th>
+                                <th> Tình trạng </th>
+                                <th> Số lượng bán </th>
+                                <th> Còn lại </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.sp.Count > 0) {
+                                var count = ViewBag.sp.Count > 5 ? 5 : ViewBag.sp.Count;
+                                @for (int i = 0; i < count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="/@ViewBag.sp[i].Thumb" class="mr-2" alt="image"> @ViewBag.sp[i].TenSanPham
+                                        </td>
+                                        <td> @ViewBag.sp[i].Cat.CatName </td>
+                                        <td>
+                                            <label class="badge badge-gradient-success">Bán chạy</label>
+                                        </td>
+                                        <td> @ViewBag.sp[i].Slban </td>
+                                        <td> @ViewBag.sp[i].UnitsInStock </td>
+                                    </tr>
+                                }
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            @if (ViewBag.news.Count>=4) {
+                <div class="card-body">
+                    <h4 class="card-title">Tin tức đăng gần đây</h4>
+                    <div class="d-flex">
+                        <div class="d-flex align-items-center mr-4 text-muted font-weight-light">
+                            <i class="mdi mdi-account-outline icon-sm mr-2"></i>
+                            <span>Admin shop</span>
+                        </div>
+                        <div class="d-flex align-items-center text-muted font-weight-light">
+                            <i class="mdi mdi-clock icon-sm mr-2"></i>
+                            <span>Bài đăng gần nhất @ViewBag.news[0].NgayTao</span>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6 pr-1">
+                            <img src="/@ViewBag.news[0].Thumb" class="mb-2 mw-100 w-100 rounded" alt="image">
+                            <img src="/@ViewBag.news[1].Thumb" class="mw-100 w-100 rounded" alt="image">
+                        </div>
+                        <div class="col-6 pl-1">
+                            <img src="/@ViewBag.news[2].Thumb" class="mb-2 mw-100 w-100 rounded" alt="image">
+                            <img src="/@ViewBag.news[3].Thumb" class="mw-100 w-100 rounded" alt="image">
+                        </div>
+                    </div>
+               
+                 </div>
+             }
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-7 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">khách hàng mới</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> Khách hàng </th>
+                                <th> Ngày tạo </th>
+                                <th> </th>
+                                <th> Đăng nhập gần đây </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.kh.Count > 0)
+                            {
+                                var count = ViewBag.kh.Count > 5 ? 5 : ViewBag.kh.Count;
+                                @for (int i = 0; i < count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (ViewBag.kh[i].Avatar != null && ViewBag.kh[i].Avatar != string.Empty)
+                                            {
+                                                <img src="/@ViewBag.kh[i].Avatar" class="mr-2" alt="image"> @ViewBag.kh[i].HoTen
+                                            }
+                                            else
+                                            {
+                                                <img src="https://www.iconpacks.net/icons/2/free-user-icon-3297-thumb.png" class="mr-2" alt="image"> @ViewBag.kh[i].HoTen
+                                                
+                                            }
+                                        </td>
+                                        <td> @ViewBag.kh[i].NgayTao </td>
+                                        <td>
+                                            <label class="badge badge-gradient-info">New</label>
+                                        </td>
+                                        <td> @ViewBag.kh[i].LastLogin </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-white">Todo</h4>
+                <p class="text-warning">&#9888; Mã giảm giá có dạng: ...xx (xx là số % khuyến mãi) mới được thêm thành công. </p>
+                <div class="add-items d-flex">
+                    <input type="text" class="form-control todo-list-input" placeholder="Tạo mã giảm giá - Ví dụ: NOEL30" id="ma" maxlength="25">
+                    <button type="submit" class="add btn btn-gradient-primary font-weight-bold" id="add-task">Add</button>
+                </div>
+                @if (Mas.Count > 0)
+                {
+
+                    <div class="list-wrapper">
+                        <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
+                            @foreach (var item in Mas)
+                            {
+                                <li>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <i class="mdi mdi-sale text-primary"></i>
+                                            @item.Magiamgia
+                                        </label>
+                                    </div>
+                                    <a class="remove" asp-controller="Home" asp-action="del" asp-route-ma="@item.Ma"> <i class="mdi mdi-close-circle-outline" id="del"></i> </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{ 
+    <script>
+        $(document).ready(() => {
+            $('#add-task').click(() => {
+                var ma = $("#ma").val();
+                $.ajax({
+                    url: '/Admin/Home/magiamgia',
+                    datatype: "json",
+                    type: "POST",
+                    data: {
+                        ma: ma
+                    },
+                    async: true,
+                    success: function (result) {
+                        if (result.status == "success") {
+                            window.location.href = result.redirectUrl;
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error')
+                    }
+                });
+            });
+        });
+    </script>
+}

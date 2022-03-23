@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Mua Sắm</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="~/Userassets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Userassets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Userassets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/Userassets/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="~/Userassets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Userassets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Userassets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Userassets/css/style.css" type="text/css">
+
+
+    <style>
+        *:not(.fa) {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+        }
+
+        .pgiamgia {
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 80px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("/Views/Shared/_HeaderPartialView.cshtml")
+
+    <section class="hero hero-normal">
+        <!-- Hero Section Begin -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>Tất cả sản phẩm</span>
+                        </div>
+                        <ul>
+                            @foreach (var item in Model.ListDanhmuc)
+                            {
+                                <li><a href="@Url.Action("Index", "MuaSam",new { id = item.CatId.ToString() })">@item.CatName</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form asp-action="Index" asp-controller="MuaSam">
+                                <input name="timkiem" type="text" placeholder="Bạn muốn mua gì?">
+                                <button type="submit" class="site-btn">TÌM</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>1800 1099</h5>
+                                <span>Hỗ trợ 24/7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Section End -->
+    </section>
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="https://img4.thuthuatphanmem.vn/uploads/2019/12/28/hinh-nen-cau-thu-bong-da-ronaldo-cuc-dep_014217069.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>TRANG MUA SẮM</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <!-- slidebarsp-->
+                @await Html.PartialAsync("_SlideBarSp.cshtml")
+
+                @RenderBody()
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+    <!-- Js Plugins -->
+    @await Html.PartialAsync("/Views/Shared/_FooterPartialView.cshtml")
+    <!-- Footer Section End -->
+    <!-- Js Plugins -->
+    <script src="~/Userassets/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Userassets/js/bootstrap.min.js"></script>
+    <script src="~/Userassets/js/jquery.nice-select.min.js"></script>
+    <script src="~/Userassets/js/jquery-ui.min.js"></script>
+    <script src="~/Userassets/js/jquery.slicknav.js"></script>
+    <script src="~/Userassets/js/mixitup.min.js"></script>
+    <script src="~/Userassets/js/owl.carousel.min.js"></script>
+    <script src="~/Userassets/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+@section scripts{
+    <script>
+        $(document).ready(() => {
+            $('#muasam').addClass('active');
+            $('#trangchu').removeClass('active');
+        });
+    </script>
+}

@@ -1,0 +1,16 @@
+﻿@model PTHShopping.Models.CtdonHang
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h6 class="text-info">Chắc chắn xóa bỏ sản phẩm: "@ViewBag.sp"của đơn hàng @Model.IddonHang?</h6>
+<hr />
+<div>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdctdonHang" />
+        <a asp-area="Admin" asp-controller="AdminCtDonHangs" asp-action="Index" asp-route-id="@Model.IddonHang">&lt; Trở về</a>|
+        <input type="submit" value="Xóa" class="btn-danger btn-rounded btn btn-sm" />
+    </form>
+</div>

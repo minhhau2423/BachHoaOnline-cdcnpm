@@ -1,0 +1,76 @@
+﻿@model IEnumerable<PTHShopping.Models.CtdonHang>
+@using System.Security.Claims;
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_ProfileLayout.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Sản phẩm
+            </th>
+            <th>
+                SL
+            </th>
+            <th>
+                Tổng
+            </th>
+            <th>
+                Ngày Giao
+            </th>
+        </tr>
+    </thead>
+    @{
+        string temp = "";
+        var lst = Model.OrderByDescending(s => s.IddonHangNavigation.NgayDatHang).Where(c => c.IddonHangNavigation.IdkhachHang == @User.Claims.First(c => c.Type == "IdKH").Value);
+    }
+    <tbody>
+        <!--Chia cac san pham theo tung don hang-->
+        @foreach (var item in lst)
+        {
+            if (temp != item.IddonHang)
+            {
+                if (temp != "")
+                {
+                    <tr>
+                        <td height="50px;"></td>
+                    </tr>
+                }
+                <tr style="background-color:lightgreen;">
+                    <td>
+                        Mã đơn hàng: @item.IddonHang
+                        <span> | Tổng: @item.IddonHangNavigation.GhiChu VND</span>
+                        @if (item.KhuyenMai > 0)
+                        {
+                            <span> | KM áp dụng: @item.KhuyenMai%</span>
+                        }
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                temp = item.IddonHang;
+            }
+            <tr>
+                <td>
+                    <span><img src="/@item.IdsanPhamNavigation.Thumb" style="max-width:100px;" /></span>
+                    @Html.DisplayFor(modelItem => item.IdsanPhamNavigation.TenSanPham)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayGiaoHang)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

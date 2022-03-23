@@ -1,0 +1,47 @@
+﻿@model PTHShopping.Models.Category
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .avt {
+        max-width: 500px;
+        max-height: 400px;
+    }
+</style>
+<h5 class="text-info">Chi tiết danh mục - @Html.DisplayFor(model => model.CatName) (@Html.DisplayFor(model => model.CatId))</h5>
+
+<div>
+    <hr />
+    <table class="">
+        <tr>
+            <td class="col-6" valign="top">
+                <img class="avt card shadow-lg" id="thumd" src="/@Model.Thumb" />
+            </td>
+            <td class="col-6 rounded bg-light shadow-lg">
+                <span class="font-weight-bold"> Mã: </span> @Html.DisplayFor(model => model.CatId)
+
+                <hr />
+                <span class="font-weight-bold"> Danh mục: </span> @Html.DisplayFor(model => model.CatName)
+
+                <hr />
+                <span class="font-weight-bold"> Mô tả: </span> @Html.DisplayFor(model => model.MoTa)
+
+                <hr />
+
+                <span class="font-weight-bold"> Published: </span> @Html.DisplayFor(model => model.Published)
+
+                <hr />
+
+                <span class="font-weight-bold"> Ký hiệu: </span> @Html.DisplayFor(model => model.KyHieu)
+
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+    <a asp-action="Index">&lt; Trở lại</a> |
+    <a asp-action="Edit" asp-route-id="@Model.CatId">Sửa</a> 
+
+</div>
